@@ -1,5 +1,4 @@
 module.exports = {
-  mongoURI:
-    "mongodb+srv://ia265:Destinyy7!@cluster0-w27ib.mongodb.net/test?retryWrites=true",
+  mongoURI: "mongodb://iavitia:Destinyy7@ds159563.mlab.com:59563/smdatabase",
   secretOrKey: "secret"
 };
