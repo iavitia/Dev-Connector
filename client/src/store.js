@@ -30,26 +30,22 @@
 
 // export default store;
 
-import { createStore, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
+import { compose, createStore } from "redux";
+import { persistStore, autoRehydrate } from "redux-persist";
 import rootReducer from "./reducers";
 
-const initialState = {};
-
-const middleware = [thunk];
-
-// Developer tools middleware
-const composeSetup =
-  process.env.NODE_ENV !== "production" &&
-  typeof window === "object" &&
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
+// eslint-disable-next-line no-underscore-dangle
+let devTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+if (process.env.NODE_ENV === "prod" || process.env.NODE_ENV === "production") {
+  devTools = a => a;
+}
 
 const store = createStore(
   rootReducer,
-  initialState,
-  composeSetup(applyMiddleware(...middleware))
+  undefined,
+  compose(
+    autoRehydrate(),
+    devTools
+  )
 );
-
-export default store;
